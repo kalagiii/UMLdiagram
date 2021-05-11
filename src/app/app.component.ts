@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import {
   DiagramComponent,
+  ICollectionChangeEventArgs,
   IConnectionChangeEventArgs,
   IExportOptions,
   ITextEditEventArgs,
@@ -154,10 +155,20 @@ export class AppComponent {
     console.log('dataObj:', this.dataObj);
   }
 
-  public connectionChange(args: IConnectionChangeEventArgs): void {
-    if (args.state === 'Changed') {
-      console.log(args);
+  public collectionChange(args: ICollectionChangeEventArgs) {
+    if (args.type == 'Removal' && args.state == 'Changed') {
+      this.dataObj.actions = this.dataObj.actions.filter((element) => {
+        return element.id !== args.element.id;
+      });
+      this.dataObj.pipes = this.dataObj.pipes.filter((element) => {
+        return element.id !== args.element.id;
+      });
+      console.log('After Deletion::', this.dataObj);
+    }
+  }
 
+  public connectionChange(args: IConnectionChangeEventArgs): void {
+    if (args.state === 'Changed' || args.state === 'Changing') {
       if (args.connector.targetID && args.connector.sourceID) {
         if (this.dataObj.pipes.length > 0) {
           for (let i = 0; i < this.dataObj.pipes.length; i++) {
@@ -170,7 +181,7 @@ export class AppComponent {
                 action: args.connector.targetID,
                 inputPort: args.connector.targetPortID,
               };
-              console.log(this.dataObj.pipes[i].from, this.dataObj.pipes[i].to);
+              console.log('Pipe Edit::', this.dataObj);
               return;
             }
           }

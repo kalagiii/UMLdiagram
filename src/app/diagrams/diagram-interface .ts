@@ -19,7 +19,7 @@ export interface Action {
   title?: any;
 }
 export interface Data {
-  title: string;
+  title?: string;
   pipes: PipeModel[];
   actions: Action[];
 }

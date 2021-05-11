@@ -42,6 +42,7 @@
           [getNodeDefaults]="nodeDefaults"
           (textEdit)="textEdit($event)"
           (dragEnter)="dragEnter($event)"
+          (collectionChange)="collectionChange($event)"
           (connectionChange)="connectionChange($event)"
           (created)="diagramCreate($event)"
         >
