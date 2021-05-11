@@ -1,0 +1,15 @@
+.sb-mobile-palette {
+  width: 240px;
+  height: 100%;
+  float: left;
+}
+
+.sb-mobile-palette-bar {
+  display: none;
+}
+
+.sb-mobile-diagram {
+  width: calc(100% - 242px);
+  height: 100%;
+  float: left;
+}
